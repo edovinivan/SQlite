@@ -25,7 +25,7 @@ public class IOTest {
      */
     public List<Test> getListTest()
     {
-        List<Test> ls = new ArrayList<Test>();
+        List<Test> ls = new ArrayList<>();
         Session sess;
         sess = HibernateUtil.getSessionFactory().openSession();   
         ls = sess.createCriteria(Test.class).list();        
@@ -43,7 +43,7 @@ public class IOTest {
         {
             t = new Test();
             t.setId(null);
-            t.setName("Name + "+i);
+            t.setName("Names + "+i);
             sess.saveOrUpdate(t);
         }
         sess.beginTransaction().commit();

@@ -192,7 +192,7 @@ public class Haupt extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private final SystemTray systemTray = SystemTray.getSystemTray();
-    private TrayIcon trayIcon;
+    private TrayIcon trayIcon;     
     
     
     /**
@@ -237,8 +237,7 @@ public class Haupt extends javax.swing.JFrame {
                 @Override
                 public void windowStateChanged(WindowEvent e) {
                     //if (e.getNewState() == JFrame.ICONIFIED) {
-                        System.out.println("11111111111111111");                        
-                        System.out.println("2222222222");  
+                        System.out.println("11111111111111111");                                                  
                         setVisible(false);
                         addTrayIcon();
                     //}
