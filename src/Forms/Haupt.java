@@ -186,7 +186,7 @@ public class Haupt extends javax.swing.JFrame {
         
         IOTest iot = new IOTest();
         iot.sageTest();
-        List<Test> ls = iot.getListTest();
+        List<Test> ls = iot.getListTest();  
         for(Test t: ls)
             System.out.println(t.getName());
     }//GEN-LAST:event_jButton1ActionPerformed
