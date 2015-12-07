@@ -11,6 +11,7 @@ import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 import java.awt.AWTException;
 import java.awt.CheckboxMenuItem;
 import java.awt.Menu;
@@ -31,12 +32,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JTree;
+import javax.swing.event.TreeModelListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import logic.Test;
 import util.IOTest;
 
@@ -70,6 +79,8 @@ public class Haupt extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -124,19 +135,24 @@ public class Haupt extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jTree1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
                         .addComponent(jButton1)
                         .addGap(92, 92, 92)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -150,17 +166,16 @@ public class Haupt extends javax.swing.JFrame {
                                 .addComponent(jButton5)
                                 .addGap(64, 64, 64)
                                 .addComponent(jButton6)))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(11, 11, 11)
                         .addComponent(jButton2)))
                 .addGap(57, 57, 57)
                 .addComponent(jLabel1)
@@ -174,7 +189,8 @@ public class Haupt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton6))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
         );
 
         pack();
@@ -182,15 +198,21 @@ public class Haupt extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+      /*  
         
         IOTest iot = new IOTest();
         iot.sageTest();
         List<Test> ls = iot.getListTest();  
         for(Test t: ls)
             System.out.println(t.getName());
+        */
+        //TreeModelFile rf = new TreeModelFile();
+        //jTree1.setModel(rf);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+        
     private final SystemTray systemTray = SystemTray.getSystemTray();
     private TrayIcon trayIcon;     
     
@@ -347,16 +369,28 @@ public class Haupt extends javax.swing.JFrame {
             try (OutputStream os = new FileOutputStream(out);
                     BufferedOutputStream bos = new BufferedOutputStream(os)) {
                 System.out.println("/home/itsoft/Desktop/pp.exe ->> c:\\"); 
+                
                 ChannelSftp channelSftp = newChannel(session, "sftp");
+                //TreeModelFile rf = new TreeModelFile(channelSftp, "/home/boffice/");
+                //jTree1.setModel(rf);
+                
+                getlist(channelSftp, "/home/boffice");
+                //channelSftp.cd("/home/boffice");
+                //channelSftp.l
+                
+                //ChannelSftp channelSftp = newChannel(session, "sftp");
                 //channelSftp.cd("/home/itsoft/Desktop/");
-                channelSftp.cd("/home/boffice/BACKUP/dbgame/");
+                //channelSftp.cd("/home/boffice/BACKUP/dbgame/");
+                
+                /*
                 Vector v =  channelSftp.ls("/home/boffice/BACKUP/dbgame/");
                 for(Object ls:v)
                 {
                     LsEntry l = (LsEntry) ls;
                     if(!l.getFilename().equals(".") && !l.getFilename().equals(".."))
                         System.out.println(l.getFilename());
-                }
+                }*/
+                
                 //channelSftp.get("ges3.bkp", bos);
                 //System.out.println("COPY OK");
             } catch (Exception e) {
@@ -368,12 +402,38 @@ public class Haupt extends javax.swing.JFrame {
             
         } catch (JSchException ex) {            
             System.out.println("eeeee" + ex);
-        }
-
+        }     
         
         //return session;
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    void getlist(ChannelSftp s, String l)
+    {
+        System.out.println(l);
+        try {
+            s.cd(l);
+            for(Object ls: s.ls(l))
+            {
+                LsEntry lk = (LsEntry)ls;
+                if(!lk.getFilename().equals(".") && !lk.getFilename().equals(".."))
+                {
+                     if(lk.getAttrs().isDir())
+                     {
+                         getlist(s, l+"/" + lk.getFilename());
+                     }
+                     else
+                         System.out.println(lk.getLongname());
+                }
+            }
+                
+            //List<LsEntry>
+        } catch (SftpException ex) {
+            Logger.getLogger(Haupt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         session.disconnect();
@@ -628,6 +688,8 @@ public class Haupt extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
 }
